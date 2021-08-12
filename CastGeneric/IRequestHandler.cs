@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CastGeneric
 {
-    public interface IRequestHandler<T1,T2> where T1 : IRequest<T2>
+    public interface IRequestHandler<out T1, T2>  where T1 :  IRequest<T2>
     {
-        Task<T2> Handle(T1 request);  
+        Task<T2> Handle(IRequest<T2> request);
     }
 }

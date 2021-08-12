@@ -7,22 +7,19 @@ namespace CastGeneric
     {
         static void Main(string[] args)
         {
-            IRequestHandler<Ping, string> Handler = new PingHandler();
-            Console.WriteLine(Handler.Handle(new Ping()).Result);
+            IRequestHandler<IRequest<string>, string> Handler =  new PingHandler();
+
             Object O = Handler;
-            Console.WriteLine(SendHandler(new Ping(),O).Result);
+            Console.WriteLine(SendHandler<Ping,string>(new Ping(),O).Result);
+
         }
 
-
-        static Task<T> SendHandler<T>(IRequest<T> request, object handler)
+        static Task<T> SendHandler<U,T>(U request, object handler) where U : IRequest<T>
         {
-            //var Handler =  handler as IRequestHandler<IRequest<T>, T>;
-            var Handler = (IRequestHandler<IRequest<T>, T>)handler;        
-            return Handler.Handle(request);
+            var Handler = (IRequestHandler<IRequest<T>,T>) handler;
+            return Handler.Handle(request); 
             //var Handler = (IRequestHandler<Ping, String>)handler;
-            //var Request = request as Ping;
             //Handler.Handle(Request);
-            //return default;
         }
     }
 }

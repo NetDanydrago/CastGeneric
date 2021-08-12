@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CastGeneric
 {
-    public class PingHandler : IRequestHandler<Ping, string>
+    public class PingHandler : IRequestHandler<Ping, string> 
     {
-        public Task<string> Handle(Ping request)
+        public Task<string> Handle(IRequest<string> request)
         {
             return Task.FromResult("pong");
         }
